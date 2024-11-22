@@ -19,8 +19,7 @@ public class ParkingLot {
 
     public Car fetch(Ticket ticket) {
         if(!parkingRecords.containsKey(ticket)){
-            System.out.println(UNRECOGNIZED_PARKING_TICKET);
-            return null;
+            throw new RuntimeException(UNRECOGNIZED_PARKING_TICKET);
         }
         Car car = parkingRecords.get(ticket);
         parkingRecords.remove(ticket);

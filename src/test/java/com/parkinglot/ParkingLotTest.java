@@ -1,23 +1,12 @@
 package com.parkinglot;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class ParkingLotTest {
-    private ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-
-    @BeforeEach
-    public void setup() {
-        System.setOut(new PrintStream(outContent));
-    }
-
     @Test
     void should_return_ticket_when_park_given_a_car() {
         //Given
@@ -100,13 +89,31 @@ public class ParkingLotTest {
         //Given
         ParkingLot parkingLot = new ParkingLot();
         Ticket ticket = new Ticket();
+        String errorMessage = "";
         //When
-        Car fetchedCar = parkingLot.fetch(ticket);
+        try {
+            parkingLot.fetch(ticket);
+        }catch (Exception e){
+            errorMessage = e.getMessage();
+        }
         //Then
-        assertThat(systemOut()).contains("Unrecognized parking ticket.");
+        assertEquals(errorMessage, "Unrecognized parking ticket.");
     }
 
-    private String systemOut() {
-        return outContent.toString();
+    @Test
+    void should_print_error_message_when_fetch_car_given_used_ticket(){
+        //Given
+        ParkingLot parkingLot = new ParkingLot();
+        Ticket ticket = parkingLot.park(new Car());
+        parkingLot.fetch(ticket);
+        String errorMessage = "";
+        //When
+        try {
+            parkingLot.fetch(ticket);
+        }catch (Exception e){
+            errorMessage = e.getMessage();
+        }
+        //Then
+        assertEquals(errorMessage, "Unrecognized parking ticket.");
     }
 }
