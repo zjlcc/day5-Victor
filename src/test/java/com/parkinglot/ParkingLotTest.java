@@ -40,7 +40,7 @@ public class ParkingLotTest {
     }
     
     @Test 
-    void should_return_tow_parked_cars_when_fetch_car_given_two_tickets(){
+    void should_return_two_parked_cars_when_fetch_car_given_two_tickets(){
         //Given
         ParkingLot parkingLot = new ParkingLot();
         Car firstCar = new Car();
@@ -54,5 +54,18 @@ public class ParkingLotTest {
         assertEquals(fetchedFirstCar, firstCar);
         assertEquals(fetchedSecondCar, secondCar);
     }
-    
+
+    @Test
+    void should_return_nothing_when_fetch_car_given_used_ticket(){
+        //Given
+        ParkingLot parkingLot = new ParkingLot();
+        Car car = new Car();
+        Ticket ticket = parkingLot.park(car);
+        parkingLot.fetch(ticket);
+        //When
+        Car fetchedCar = parkingLot.fetch(ticket);
+        //Then
+        assertNull(fetchedCar);
+    }
+
 }
