@@ -41,5 +41,19 @@ public class ParkingBoyTest {
         assertNotNull(unrecognizedParkingTicketException);
     }
 
-
+    @Test
+    void should_return_two_parked_cars_when_fetch_car_given_two_tickets() {
+        //Given
+        ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
+        Car firstCar = new Car();
+        Car secondCar = new Car();
+        Ticket firstTicket = parkingBoy.park(firstCar);
+        Ticket secondticket = parkingBoy.park(secondCar);
+        //When
+        Car fetchedFirstCar = parkingBoy.fetch(firstTicket);
+        Car fetchedSecondCar = parkingBoy.fetch(secondticket);
+        //Then
+        assertEquals(fetchedFirstCar, firstCar);
+        assertEquals(fetchedSecondCar, secondCar);
+    }
 }
