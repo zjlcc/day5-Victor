@@ -5,7 +5,6 @@ import java.util.Map;
 
 public class ParkingLot {
     private static final int CAPACITY = 10;
-    private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
     private static final String NO_AVAILABLE_POSITION = "No available position.";
     private final Map<Ticket, Car> parkingRecords = new HashMap<>(CAPACITY);
 
@@ -19,11 +18,20 @@ public class ParkingLot {
     }
 
     public Car fetch(Ticket ticket) {
-        if(!parkingRecords.containsKey(ticket)){
-            throw new UnrecognizedParkingTicketException(UNRECOGNIZED_PARKING_TICKET);
-        }
         Car car = parkingRecords.get(ticket);
         parkingRecords.remove(ticket);
         return car;
+    }
+
+    public boolean isFulling() {
+        return parkingRecords.size() == CAPACITY;
+    }
+
+    public boolean isCarParked(Ticket ticket){
+        return parkingRecords.containsKey(ticket);
+    }
+
+    public Map<Ticket, Car> getParkingRecords() {
+        return parkingRecords;
     }
 }
