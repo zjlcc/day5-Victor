@@ -2,6 +2,9 @@ package com.parkinglot;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.stream.IntStream;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ParkingLotTest {
@@ -67,5 +70,20 @@ public class ParkingLotTest {
         //Then
         assertNull(fetchedCar);
     }
+
+    @Test
+    void should_return_nothing_when_park_car_given_parking_lot_fulling(){
+        //Given
+        ParkingLot parkingLot = new ParkingLot();
+        IntStream.range(0,10).forEach(i->{
+            Car car = new Car();
+            Ticket ticket = parkingLot.park(car);
+        });
+        //When
+        Ticket ticket = parkingLot.park(new Car());
+        //Then
+        assertNull(ticket);
+    }
+
 
 }
