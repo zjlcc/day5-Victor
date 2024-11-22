@@ -2,14 +2,13 @@ package com.parkinglot;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ParkingLotTest {
     @Test
-    void should_return_ticket_when_park_given_a_car(){
+    void should_return_ticket_when_park_given_a_car() {
         //Given
         ParkingLot parkingLot = new ParkingLot();
         Car car = new Car();
@@ -20,7 +19,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void should_return_the_car_when_fetch_given_a_ticket(){
+    void should_return_the_car_when_fetch_given_a_ticket() {
         //Given
         ParkingLot parkingLot = new ParkingLot();
         Car car = new Car();
@@ -32,7 +31,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void should_return_nothing_when_fetch_car_given_a_wrong_ticket(){
+    void should_return_nothing_when_fetch_car_given_a_wrong_ticket() {
         //Given
         ParkingLot parkingLot = new ParkingLot();
         Ticket ticket = new Ticket();
@@ -41,9 +40,9 @@ public class ParkingLotTest {
         //Then
         assertNull(fetchedCar);
     }
-    
-    @Test 
-    void should_return_two_parked_cars_when_fetch_car_given_two_tickets(){
+
+    @Test
+    void should_return_two_parked_cars_when_fetch_car_given_two_tickets() {
         //Given
         ParkingLot parkingLot = new ParkingLot();
         Car firstCar = new Car();
@@ -59,7 +58,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void should_return_nothing_when_fetch_car_given_used_ticket(){
+    void should_return_nothing_when_fetch_car_given_used_ticket() {
         //Given
         ParkingLot parkingLot = new ParkingLot();
         Car car = new Car();
@@ -72,10 +71,10 @@ public class ParkingLotTest {
     }
 
     @Test
-    void should_return_nothing_when_park_car_given_parking_lot_fulling(){
+    void should_return_nothing_when_park_car_given_parking_lot_fulling() {
         //Given
         ParkingLot parkingLot = new ParkingLot();
-        IntStream.range(0,10).forEach(i->{
+        IntStream.range(0, 10).forEach(i -> {
             Car car = new Car();
             Ticket ticket = parkingLot.park(car);
         });
@@ -84,6 +83,4 @@ public class ParkingLotTest {
         //Then
         assertNull(ticket);
     }
-
-
 }
