@@ -89,15 +89,10 @@ public class ParkingLotTest {
         //Given
         ParkingLot parkingLot = new ParkingLot();
         Ticket ticket = new Ticket();
-        String errorMessage = "";
         //When
-        try {
-            parkingLot.fetch(ticket);
-        }catch (Exception e){
-            errorMessage = e.getMessage();
-        }
+        UnrecognizedParkingTicketException unrecognizedParkingTicketException = assertThrows(UnrecognizedParkingTicketException.class, () -> parkingLot.fetch(ticket));
         //Then
-        assertEquals(errorMessage, "Unrecognized parking ticket.");
+        assertEquals(unrecognizedParkingTicketException.getMessage(), "Unrecognized parking ticket.");
     }
 
     @Test
@@ -106,15 +101,10 @@ public class ParkingLotTest {
         ParkingLot parkingLot = new ParkingLot();
         Ticket ticket = parkingLot.park(new Car());
         parkingLot.fetch(ticket);
-        String errorMessage = "";
         //When
-        try {
-            parkingLot.fetch(ticket);
-        }catch (Exception e){
-            errorMessage = e.getMessage();
-        }
+        UnrecognizedParkingTicketException unrecognizedParkingTicketException = assertThrows(UnrecognizedParkingTicketException.class, () -> parkingLot.fetch(ticket));
         //Then
-        assertEquals(errorMessage, "Unrecognized parking ticket.");
+        assertEquals(unrecognizedParkingTicketException.getMessage(), "Unrecognized parking ticket.");
     }
 
     @Test
@@ -123,16 +113,11 @@ public class ParkingLotTest {
         ParkingLot parkingLot = new ParkingLot();
         IntStream.range(0, 10).forEach(i -> {
             Car car = new Car();
-            Ticket ticket = parkingLot.park(car);
+            parkingLot.park(car);
         });
-        String errorMessage = "";
         //When
-        try {
-            parkingLot.park(new Car());
-        }catch (Exception e){
-            errorMessage = e.getMessage();
-        }
+        NoAvailablePositionException noAvailablePositionException = assertThrows(NoAvailablePositionException.class, () -> parkingLot.park(new Car()));
         //Then
-        assertEquals(errorMessage, "No available position.");
+        assertEquals(noAvailablePositionException.getMessage(), "No available position.");
     }
 }
