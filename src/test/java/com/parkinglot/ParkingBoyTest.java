@@ -101,4 +101,25 @@ public class ParkingBoyTest {
         ParkingLot carParkedLot = parkingBoy.getParkingLots().get(0);
         assertTrue(carParkedLot.getParkingRecords().containsKey(ticket));
     }
+
+    @Test
+    void should_parking_second_lot_when_park_given_first_full_second_available_and_a_parking_boy(){
+        //Given
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        ParkingLot firstLot = new ParkingLot();
+        parkingLots.add(firstLot);
+        ParkingLot secondLot = new ParkingLot();
+        parkingLots.add(secondLot);
+        IntStream.range(0, 10).forEach(i -> {
+            Car car = new Car();
+            parkingBoy.park(car);
+        });
+        Car car = new Car();
+        //When
+        Ticket ticket = parkingBoy.park(car);
+        //Then
+        ParkingLot carParkedLot = parkingBoy.getParkingLots().get(1);
+        assertTrue(carParkedLot.getParkingRecords().containsKey(ticket));
+    }
 }
