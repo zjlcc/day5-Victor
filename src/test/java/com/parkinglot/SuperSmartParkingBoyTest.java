@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -84,5 +85,24 @@ public class SuperSmartParkingBoyTest {
         UnrecognizedParkingTicketException unrecognizedParkingTicketException = assertThrows(UnrecognizedParkingTicketException.class, () -> superSmartParkingBoy.fetch(ticket));
         //Then
         assertEquals(unrecognizedParkingTicketException.getMessage(), "Unrecognized parking ticket.");
+    }
+
+    @Test
+    void should_print_error_message_when_park_car_given_fulling_parking_lot_and_a_super_parking_boy(){
+        //Given
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(parkingLots);
+        ParkingLot firstLot = new ParkingLot();
+        parkingLots.add(firstLot);
+        ParkingLot secondLot = new ParkingLot();
+        parkingLots.add(secondLot);
+        IntStream.range(0, 20).forEach(i -> {
+            Car car = new Car();
+            superSmartParkingBoy.park(car);
+        });
+        //When
+        NoAvailablePositionException noAvailablePositionException = assertThrows(NoAvailablePositionException.class, () -> superSmartParkingBoy.park(new Car()));
+        //Then
+        assertEquals(noAvailablePositionException.getMessage(), "No available position.");
     }
 }
