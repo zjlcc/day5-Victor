@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SmartParkingBoyTest {
@@ -37,5 +38,24 @@ public class SmartParkingBoyTest {
         //Then
         ParkingLot parkingLot = smartParkingBoy.getParkingLots().get(1);
         assertTrue(parkingLot.getParkingRecords().containsKey(ticket));
+    }
+
+    @Test
+    void should_return_two_cars_when_fetch_given_two_tickets_and_a_smart_parking_boy(){
+        //Given
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(new ParkingLot());
+        parkingLots.add(new ParkingLot());
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        Car firstCar = new Car();
+        Car secondCar = new Car();
+        Ticket firstTicket = smartParkingBoy.park(firstCar);
+        Ticket secondticket = smartParkingBoy.park(secondCar);
+        //When
+        Car firstFetchedCar = smartParkingBoy.fetch(firstTicket);
+        Car secondFetchedCar = smartParkingBoy.fetch(secondticket);
+        //Then
+        assertEquals(firstCar, firstFetchedCar);
+        assertEquals(secondCar, secondFetchedCar);
     }
 }
