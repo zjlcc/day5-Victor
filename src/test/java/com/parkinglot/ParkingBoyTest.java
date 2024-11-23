@@ -115,9 +115,8 @@ public class ParkingBoyTest {
             Car car = new Car();
             parkingBoy.park(car);
         });
-        Car car = new Car();
         //When
-        Ticket ticket = parkingBoy.park(car);
+        Ticket ticket = parkingBoy.park(new Car());
         //Then
         ParkingLot carParkedLot = parkingBoy.getParkingLots().get(1);
         assertTrue(carParkedLot.getParkingRecords().containsKey(ticket));
@@ -170,5 +169,24 @@ public class ParkingBoyTest {
         UnrecognizedParkingTicketException unrecognizedParkingTicketException = assertThrows(UnrecognizedParkingTicketException.class, () -> parkingBoy.fetch(ticket));
         //Then
         assertEquals(unrecognizedParkingTicketException.getMessage(), "Unrecognized parking ticket.");
+    }
+
+    @Test
+    void should_print_error_message_when_park_car_given_fulling_parking_lot_and_a_parking_boy(){
+        //Given
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        ParkingLot firstLot = new ParkingLot();
+        parkingLots.add(firstLot);
+        ParkingLot secondLot = new ParkingLot();
+        parkingLots.add(secondLot);
+        IntStream.range(0, 20).forEach(i -> {
+            Car car = new Car();
+            parkingBoy.park(car);
+        });
+        //When
+        NoAvailablePositionException noAvailablePositionException = assertThrows(NoAvailablePositionException.class, () -> parkingBoy.park(new Car()));
+        //Then
+        assertEquals(noAvailablePositionException.getMessage(), "No available position.");
     }
 }

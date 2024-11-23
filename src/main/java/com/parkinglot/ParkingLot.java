@@ -5,13 +5,9 @@ import java.util.Map;
 
 public class ParkingLot {
     private static final int CAPACITY = 10;
-    private static final String NO_AVAILABLE_POSITION = "No available position.";
     private final Map<Ticket, Car> parkingRecords = new HashMap<>(CAPACITY);
 
     public Ticket park(Car car) {
-        if (parkingRecords.size() == CAPACITY) {
-            throw new NoAvailablePositionException(NO_AVAILABLE_POSITION);
-        }
         Ticket ticket = new Ticket();
         parkingRecords.put(ticket, car);
         return ticket;
