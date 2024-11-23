@@ -24,7 +24,7 @@ public class SmartParkingBoyTest {
     }
 
     @Test
-    void should_in_second_lot_when_park_car_given_two_empty_lots_and_a_smart_parking_boy(){
+    void should_in_second_lot_when_park_car_given_second_more_empty_lots_and_a_smart_parking_boy(){
         //Given
         List<ParkingLot> parkingLots = new ArrayList<>();
         ParkingLot firstLot = new ParkingLot();
