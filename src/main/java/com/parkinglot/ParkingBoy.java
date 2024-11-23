@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class ParkingBoy {
     protected List<ParkingLot> parkingLots;
-    protected static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
+    private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
     protected static final String NO_AVAILABLE_POSITION = "No available position.";
 
     public ParkingBoy(List<ParkingLot> parkingLots){
