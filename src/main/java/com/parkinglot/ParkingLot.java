@@ -26,7 +26,7 @@ public class ParkingLot {
         return usedSize == CAPACITY;
     }
 
-    public boolean isCarParked(Ticket ticket){
+    public boolean isCarParked(Ticket ticket) {
         return parkingRecords.containsKey(ticket);
     }
 
@@ -36,5 +36,9 @@ public class ParkingLot {
 
     public Integer getUsedSize() {
         return usedSize;
+    }
+
+    protected double getPositionRate() {
+        return (double) usedSize / CAPACITY;
     }
 }
