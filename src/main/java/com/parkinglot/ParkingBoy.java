@@ -30,7 +30,7 @@ public class ParkingBoy {
         return parkingLots.stream()
                 .filter(parkingLot -> parkingLot.isCarParked(ticket))
                 .findFirst()
-                .get();
+                .orElse(null);
     }
 
     public List<ParkingLot> getParkingLots() {
