@@ -122,4 +122,23 @@ public class ParkingBoyTest {
         ParkingLot carParkedLot = parkingBoy.getParkingLots().get(1);
         assertTrue(carParkedLot.getParkingRecords().containsKey(ticket));
     }
+
+    @Test
+    void should_return_two_cars_when_fetch_given_two_tickets_and_a_parking_boy(){
+        //Given
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(new ParkingLot());
+        parkingLots.add(new ParkingLot());
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        Car firstCar = new Car();
+        Car secondCar = new Car();
+        Ticket firstTicket = parkingBoy.park(firstCar);
+        Ticket secondticket = parkingBoy.park(secondCar);
+        //When
+        Car firstFetchedCar = parkingBoy.fetch(firstTicket);
+        Car secondFetchedCar = parkingBoy.fetch(secondticket);
+        //Then
+        assertEquals(firstCar, firstFetchedCar);
+        assertEquals(secondCar, secondFetchedCar);
+    }
 }

@@ -28,7 +28,7 @@ public class ParkingBoy {
 
     private ParkingLot getCarParkedLot(Ticket ticket){
         return parkingLots.stream()
-                .filter(parkingLot -> !parkingLot.isCarParked(ticket))
+                .filter(parkingLot -> parkingLot.isCarParked(ticket))
                 .findFirst()
                 .get();
     }
