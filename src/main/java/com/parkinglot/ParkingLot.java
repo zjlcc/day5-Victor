@@ -2,14 +2,23 @@ package com.parkinglot;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ParkingLot {
-    private static final int CAPACITY = 10;
-    private final Map<Ticket, Car> parkingRecords = new HashMap<>(CAPACITY);
+    private final int CAPACITY;
+    private final Map<Ticket, Car> parkingRecords;
     private Integer usedSize = 0;
+
+    public ParkingLot(Integer capacity){
+        CAPACITY = capacity;
+        parkingRecords = new HashMap<>(CAPACITY);
+    }
 
     public Ticket park(Car car) {
         Ticket ticket = new Ticket();
+        if(isFulling()){
+            return null;
+        }
         parkingRecords.put(ticket, car);
         usedSize++;
         return ticket;

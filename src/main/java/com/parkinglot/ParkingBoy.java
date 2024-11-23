@@ -8,16 +8,20 @@ public class ParkingBoy {
     private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
     protected static final String NO_AVAILABLE_POSITION = "No available position.";
 
-    public ParkingBoy(List<ParkingLot> parkingLots){
+    public ParkingBoy(List<ParkingLot> parkingLots) {
         this.parkingLots = parkingLots;
     }
 
     public Ticket park(Car car) {
         ParkingLot availableLot = getAvailableLot();
-        if(Objects.isNull(availableLot)){
+        checkParkingLot(availableLot);
+        return availableLot.park(car);
+    }
+
+    protected static void checkParkingLot(ParkingLot parkingLot) {
+        if (Objects.isNull(parkingLot)) {
             throw new NoAvailablePositionException(NO_AVAILABLE_POSITION);
         }
-        return availableLot.park(car);
     }
 
     private ParkingLot getAvailableLot() {
@@ -29,13 +33,13 @@ public class ParkingBoy {
 
     public Car fetch(Ticket ticket) {
         ParkingLot carParkedLot = getCarParkedLot(ticket);
-        if(Objects.isNull(carParkedLot)) {
+        if (Objects.isNull(carParkedLot)) {
             throw new UnrecognizedParkingTicketException(UNRECOGNIZED_PARKING_TICKET);
         }
         return carParkedLot.fetch(ticket);
     }
 
-    private ParkingLot getCarParkedLot(Ticket ticket){
+    private ParkingLot getCarParkedLot(Ticket ticket) {
         return parkingLots.stream()
                 .filter(parkingLot -> parkingLot.isCarParked(ticket))
                 .findFirst()

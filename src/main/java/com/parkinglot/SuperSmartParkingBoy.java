@@ -2,7 +2,6 @@ package com.parkinglot;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 public class SuperSmartParkingBoy extends ParkingBoy {
     public SuperSmartParkingBoy(List<ParkingLot> parkingLots) {
@@ -11,9 +10,7 @@ public class SuperSmartParkingBoy extends ParkingBoy {
 
     public Ticket park(Car car) {
         ParkingLot minPositionRateLot = getMinPositionRateLot();
-        if(Objects.isNull(minPositionRateLot)){
-            throw new NoAvailablePositionException(NO_AVAILABLE_POSITION);
-        }
+        checkParkingLot(minPositionRateLot);
         return minPositionRateLot.park(car);
     }
 
