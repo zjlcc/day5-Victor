@@ -21,4 +21,21 @@ public class SmartParkingBoyTest {
         ParkingLot parkingLot = smartParkingBoy.getParkingLots().get(0);
         assertTrue(parkingLot.getParkingRecords().containsKey(ticket));
     }
+
+    @Test
+    void should_in_second_lot_when_park_car_given_two_empty_lots_and_a_smart_parking_boy(){
+        //Given
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        ParkingLot firstLot = new ParkingLot();
+        parkingLots.add(firstLot);
+        ParkingLot secondLot = new ParkingLot();
+        parkingLots.add(secondLot);
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        smartParkingBoy.park(new Car());
+        //When
+        Ticket ticket = smartParkingBoy.park(new Car());
+        //Then
+        ParkingLot parkingLot = smartParkingBoy.getParkingLots().get(1);
+        assertTrue(parkingLot.getParkingRecords().containsKey(ticket));
+    }
 }
