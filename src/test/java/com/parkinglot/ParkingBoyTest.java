@@ -9,15 +9,16 @@ import java.util.stream.IntStream;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ParkingBoyTest {
-    public static final String NO_AVAILABLE_POSITION = "No available position.";
-    public static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
+    private static final String NO_AVAILABLE_POSITION = "No available position.";
+    private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
+    private static final FindParkingLotHandler PARKING_BOY_POLICY = new ParkingBoyPolicy();
     @Test
     void should_parking_first_lot_when_park_given_two_free_lot_and_a_parking_boy() {
         //Given
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(new ParkingLot(10));
         parkingLots.add(new ParkingLot(10));
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, PARKING_BOY_POLICY);
         Car car = new Car();
         //When
         Ticket ticket = parkingBoy.park(car);
@@ -30,7 +31,7 @@ public class ParkingBoyTest {
     void should_parking_second_lot_when_park_given_first_full_second_available_and_a_parking_boy() {
         //Given
         List<ParkingLot> parkingLots = new ArrayList<>();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, PARKING_BOY_POLICY);
         ParkingLot firstLot = new ParkingLot(10);
         parkingLots.add(firstLot);
         ParkingLot secondLot = new ParkingLot(10);
@@ -52,7 +53,7 @@ public class ParkingBoyTest {
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(new ParkingLot(10));
         parkingLots.add(new ParkingLot(10));
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, PARKING_BOY_POLICY);
         Car firstCar = new Car();
         Car secondCar = new Car();
         Ticket firstTicket = parkingBoy.park(firstCar);
@@ -71,7 +72,7 @@ public class ParkingBoyTest {
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(new ParkingLot(10));
         parkingLots.add(new ParkingLot(10));
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, PARKING_BOY_POLICY);
         Ticket ticket = new Ticket();
         //When
         UnrecognizedParkingTicketException unrecognizedParkingTicketException = assertThrows(UnrecognizedParkingTicketException.class, () -> parkingBoy.fetch(ticket));
@@ -85,7 +86,7 @@ public class ParkingBoyTest {
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(new ParkingLot(10));
         parkingLots.add(new ParkingLot(10));
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, PARKING_BOY_POLICY);
         Car car = new Car();
         Ticket ticket = parkingBoy.park(car);
         parkingBoy.fetch(ticket);
@@ -99,17 +100,17 @@ public class ParkingBoyTest {
     void should_print_error_message_when_park_car_given_fulling_parking_lot_and_a_parking_boy() {
         //Given
         List<ParkingLot> parkingLots = new ArrayList<>();
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, PARKING_BOY_POLICY);
         ParkingLot firstLot = new ParkingLot(10);
         parkingLots.add(firstLot);
         ParkingLot secondLot = new ParkingLot(10);
         parkingLots.add(secondLot);
         IntStream.range(0, 20).forEach(i -> {
             Car car = new Car();
-            smartParkingBoy.park(car);
+            parkingBoy.park(car);
         });
         //When
-        NoAvailablePositionException noAvailablePositionException = assertThrows(NoAvailablePositionException.class, () -> smartParkingBoy.park(new Car()));
+        NoAvailablePositionException noAvailablePositionException = assertThrows(NoAvailablePositionException.class, () -> parkingBoy.park(new Car()));
         //Then
         assertEquals(noAvailablePositionException.getMessage(), NO_AVAILABLE_POSITION);
     }

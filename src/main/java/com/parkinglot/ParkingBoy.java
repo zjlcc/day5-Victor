@@ -7,13 +7,15 @@ public class ParkingBoy {
     protected List<ParkingLot> parkingLots;
     private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
     protected static final String NO_AVAILABLE_POSITION = "No available position.";
+    private FindParkingLotHandler findParkingLotHandler;
 
-    public ParkingBoy(List<ParkingLot> parkingLots) {
+    public ParkingBoy(List<ParkingLot> parkingLots, FindParkingLotHandler findParkingLotHandler) {
         this.parkingLots = parkingLots;
+        this.findParkingLotHandler = findParkingLotHandler;
     }
 
     public Ticket park(Car car) {
-        ParkingLot availableLot = getAvailableLot();
+        ParkingLot availableLot = findParkingLotHandler.findParingLot(parkingLots);
         checkParkingLot(availableLot);
         return availableLot.park(car);
     }

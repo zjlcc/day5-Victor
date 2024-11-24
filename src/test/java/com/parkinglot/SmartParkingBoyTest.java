@@ -9,15 +9,17 @@ import java.util.stream.IntStream;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SmartParkingBoyTest {
-    public static final String NO_AVAILABLE_POSITION = "No available position.";
-    public static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
+    private static final String NO_AVAILABLE_POSITION = "No available position.";
+    private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
+    private static final FindParkingLotHandler SMART_PARKING_BOY_POLICY = new SmartParkingBoyPolicy();
+
     @Test
     void should_in_first_lot_when_park_car_given_two_empty_lots_and_a_smart_parking_boy() {
         //Given
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(new ParkingLot(10));
         parkingLots.add(new ParkingLot(10));
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        ParkingBoy smartParkingBoy = new ParkingBoy(parkingLots, SMART_PARKING_BOY_POLICY);
         //When
         Ticket ticket = smartParkingBoy.park(new Car());
         //Then
@@ -33,7 +35,7 @@ public class SmartParkingBoyTest {
         parkingLots.add(firstLot);
         ParkingLot secondLot = new ParkingLot(10);
         parkingLots.add(secondLot);
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        ParkingBoy smartParkingBoy = new ParkingBoy(parkingLots, SMART_PARKING_BOY_POLICY);
         smartParkingBoy.park(new Car());
         //When
         Ticket ticket = smartParkingBoy.park(new Car());
@@ -48,7 +50,7 @@ public class SmartParkingBoyTest {
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(new ParkingLot(10));
         parkingLots.add(new ParkingLot(10));
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        ParkingBoy smartParkingBoy = new ParkingBoy(parkingLots, SMART_PARKING_BOY_POLICY);
         Car firstCar = new Car();
         Car secondCar = new Car();
         Ticket firstTicket = smartParkingBoy.park(firstCar);
@@ -67,7 +69,7 @@ public class SmartParkingBoyTest {
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(new ParkingLot(10));
         parkingLots.add(new ParkingLot(10));
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        ParkingBoy smartParkingBoy = new ParkingBoy(parkingLots, SMART_PARKING_BOY_POLICY);
         Ticket ticket = new Ticket();
         //When
         UnrecognizedParkingTicketException unrecognizedParkingTicketException = assertThrows(UnrecognizedParkingTicketException.class, () -> smartParkingBoy.fetch(ticket));
@@ -81,7 +83,7 @@ public class SmartParkingBoyTest {
         List<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(new ParkingLot(10));
         parkingLots.add(new ParkingLot(10));
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        ParkingBoy smartParkingBoy = new ParkingBoy(parkingLots, SMART_PARKING_BOY_POLICY);
         Car car = new Car();
         Ticket ticket = smartParkingBoy.park(car);
         smartParkingBoy.fetch(ticket);
@@ -95,7 +97,7 @@ public class SmartParkingBoyTest {
     void should_print_error_message_when_park_car_given_fulling_parking_lot_and_a_parking_boy() {
         //Given
         List<ParkingLot> parkingLots = new ArrayList<>();
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        ParkingBoy smartParkingBoy = new ParkingBoy(parkingLots, SMART_PARKING_BOY_POLICY);
         ParkingLot firstLot = new ParkingLot(10);
         parkingLots.add(firstLot);
         ParkingLot secondLot = new ParkingLot(10);
